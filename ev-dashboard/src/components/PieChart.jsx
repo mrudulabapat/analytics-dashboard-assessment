@@ -1,32 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Card, CardContent, Grid, MenuItem, Select, FormControl, InputLabel, TextField, Input, FormHelperText } from '@mui/material';
-import { Bar } from 'react-chartjs-2';
+import { Pie } from 'react-chartjs-2';
+import { Box, Card, CardContent, Grid, MenuItem, Select, FormControl, InputLabel } from '@mui/material';
 
 import {
   Chart as ChartJS,
-  CategoryScale,       // Register the category scale
-  LinearScale,
-  BarElement,
-  Title,
+  ArcElement,
   Tooltip,
   Legend,
 } from 'chart.js';
 
-// Register the components for use
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend
-);
+// Register required components
+ChartJS.register(ArcElement, Tooltip, Legend);
 
-const Chart = ({data}) => {
-
-  const [countyAnalysis, setcountyAnalysis] = useState({});
-  const [makeAnalysis, setMakeAnalysis] = useState({});
+const PieChart = ({ data }) => {
   const [vehicleTypeAnalysis, setVehicleTypeAnalysis] = useState({});
+  const [cafvAnalysis, setCafvAnalysis] = useState({});
+  const backgroundColor = ['#4BC0C0', '#324b4b', '#95b1b0', '#a0acea', '#6a78b2'];
+  const hoverBackgroundColor = ['#4BC0C0', '#324b4b', '#95b1b0', '#a0acea', '#6a78b2'];
   const [selectedCounty, setSelectedCounty] = useState('');
   const [uniqueCounties, setUniqueCounties] = useState([]);
   const [selectedYear, setSelectedYear] = useState('');
@@ -35,10 +25,10 @@ const Chart = ({data}) => {
   const [uniqueMakes, setUniqueMakes] = useState([]);
 
   useEffect(() => {
+    
     if (data.length > 0) {
-      analyzeDataByCounty(data); // Call analyzeData only if data is available
-      analyzeDataByMake(data);
       analyzeDataByVehicleType(data);
+      analyzeCafvData(data);
       setUniqueCounties([...new Set(data.map(row => row['County']))]);
       setUniqueYears([...new Set(data.map(row => row['Model Year']))]);
       setUniqueMakes([...new Set(data.map(row => row['Make']))]);
@@ -48,77 +38,10 @@ const Chart = ({data}) => {
   // Update charts when the county/year is selected
   useEffect(() => {
     if (data.length > 0) {
-      analyzeDataByCounty(data);
-      analyzeDataByMake(data);
       analyzeDataByVehicleType(data);
+      analyzeCafvData(data);
     }
   }, [selectedCounty, selectedYear, selectedMake]);
-
-
-
-// Analyze the data by state, for example
-const analyzeDataByCounty = (data) => {
-  const filteredData = data.filter(row => 
-    (selectedYear ? row['Model Year'] === selectedYear : true) &&
-    (selectedMake ? row['Make'] === selectedMake : true)
-  );
-
-  const countyCount = filteredData.reduce((acc, row) => {
-    const county = row['County'];
-    if (county) {
-      acc[county] = (acc[county] || 0) + 1;
-    }
-    return acc;
-  }, {});
-  
-  setcountyAnalysis(countyCount);
-
-  console.log('County Analysis:', countyCount);  // Debug the result of the analysis
-};
-
-  // Prepare chart data
-  const chartDataCounty = {
-    labels: Object.keys(countyAnalysis),  // States
-    datasets: [{
-      label: 'Number of Electric Vehicles by County',
-      data: Object.values(countyAnalysis),  // Count of vehicles by state
-      //backgroundColor: 'rgba(75, 192, 192, 0.6)',
-      backgroundColor: Object.keys(countyAnalysis).map(county => 
-        (county === selectedCounty || selectedCounty === "") ?  'rgba(75, 192, 192, 0.6)' : 'rgba(50,75,75, 0.6)' 
-      ),
-    }],
-  };
-
-
-const analyzeDataByMake = (data) => {
-  const filteredData = data.filter(row => 
-    (selectedCounty ? row['County'] === selectedCounty : true) &&
-    (selectedYear ? row['Model Year'] === selectedYear : true)
-  );
-
-  const makeCount = filteredData.reduce((acc, row) => {
-    const make = row['Make'];
-    if (make) {
-      acc[make] = (acc[make] || 0) + 1;
-    }
-    return acc;
-  }, {});
-  setMakeAnalysis(makeCount);
-  console.log(makeCount);
-};
-
-  // Prepare chart data
-  const chartDataMake = {
-    labels: Object.keys(makeAnalysis),  // Make
-    datasets: [{
-      label: 'Number of Electric Vehicles by Make',
-      data: Object.values(makeAnalysis),  // Count of vehicles by state
-      backgroundColor: Object.keys(makeAnalysis).map(make => 
-        (make === selectedMake || selectedMake === "") ?  'rgba(75, 192, 192, 0.6)' : 'rgba(50,75,75, 0.6)' 
-      ),
-    }],
-
-  };
 
   const analyzeDataByVehicleType = (data) => {
     const filteredData = data.filter(row => 
@@ -137,15 +60,45 @@ const analyzeDataByMake = (data) => {
     setVehicleTypeAnalysis(vehicleTypeCount);
   };
 
-  const chartDataVehicleType = {
-    labels: Object.keys(vehicleTypeAnalysis),
-    datasets: [{
-      label: 'Number of Electric Vehicles by Type',
-      data: Object.values(vehicleTypeAnalysis),
-      backgroundColor: 'rgba(75, 192, 192, 0.6)',
-    }],
+  const analyzeCafvData = (data) => {
+    const filteredData = data.filter(row => 
+      (selectedCounty ? row['County'] === selectedCounty : true) &&
+      (selectedYear ? row['Model Year'] === selectedYear : true) &&
+      (selectedMake ? row['Make'] === selectedMake : true)
+    );
+
+    const cafvCount = filteredData.reduce((acc, row) => {
+      const cafvType = row['Clean Alternative Fuel Vehicle (CAFV) Eligibility'];
+      if (cafvType) {
+        acc[cafvType] = (acc[cafvType] || 0) + 1;
+      }
+      return acc;
+    }, {});
+    setCafvAnalysis(cafvCount);
   };
 
+
+  const vehicleTypeChartData = {
+    labels: Object.keys(vehicleTypeAnalysis),
+    datasets: [
+      {
+        data: Object.values(vehicleTypeAnalysis),
+        backgroundColor: backgroundColor,
+        hoverBackgroundColor: hoverBackgroundColor,
+      },
+    ],
+  };
+
+  const cafvChartData = {
+    labels: Object.keys(cafvAnalysis),
+    datasets: [
+      {
+        data: Object.values(cafvAnalysis),
+        backgroundColor: backgroundColor,
+        hoverBackgroundColor: hoverBackgroundColor,
+      },
+    ],
+  };
 
   return (
     <Box sx={{ padding: '1em' }}>
@@ -211,48 +164,34 @@ const analyzeDataByMake = (data) => {
           </Select>
         </FormControl>
       </Box>
-        
       <Box sx={{ padding: '1em' }}>
-      <Grid container spacing={2}>
+    <Grid container spacing={2}>
         <Grid item xs={12} sm={6} md={6} >
-          <Card sx={{ minHeight: '300px' }}>
-            <CardContent>
-              {Object.keys(countyAnalysis).length > 0 ? (
-                <Bar data={chartDataCounty} />
-              ) : (
-                <p>Loading data...</p>
-              )}
+        <Card sx={{ minHeight: '300px' }}>
+            <CardContent sx={{ height:'100%', justifyContent: 'center', alignItems: 'center' }}>
+                {Object.keys(vehicleTypeAnalysis).length > 0 ? (
+                    <Pie data={ vehicleTypeChartData } options={{ plugins: { legend: { position: 'top' } }, maintainAspectRatio: false }} height={300} />
+                ) : (
+                    <p>Loading data...</p>
+                )}
             </CardContent>
-          </Card>
+        </Card>
         </Grid>
-        
         <Grid item xs={12} sm={6} md={6}>
           <Card sx={{ minHeight: '300px' }}>
-            <CardContent>
-              {Object.keys(makeAnalysis).length > 0 ? (
-                <Bar data={chartDataMake} />
+            <CardContent sx={{ height: '100%', justifyContent: 'center', alignItems: 'center' }}>
+              {Object.keys(cafvAnalysis).length > 0 ? (
+                <Pie data={cafvChartData} options={{ plugins: { legend: { position: 'top' } }, maintainAspectRatio: false }} height={300} />
               ) : (
-                <p>Loading data...</p>
-              )}
-            </CardContent>
-          </Card>
-        </Grid>
-        
-        <Grid item xs={12} sm={6} md={6}>
-          <Card sx={{ minHeight: '300px' }}>
-            <CardContent>
-              {Object.keys(vehicleTypeAnalysis).length > 0 ? (
-                <Bar data={chartDataVehicleType} />
-              ) : (
-                <p>Loading data...</p>
+                <p>Loading CAFV data...</p>
               )}
             </CardContent>
           </Card>
         </Grid>
       </Grid>
     </Box>
-  </Box>
+    </Box>
   );
 };
 
-export default Chart;
+export default PieChart;

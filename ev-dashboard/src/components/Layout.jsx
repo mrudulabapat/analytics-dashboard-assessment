@@ -1,6 +1,7 @@
 // src/components/Layout.js
 import React from 'react';
 import { AppBar, Drawer, Toolbar, Typography, List, ListItem, ListItemText } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 const Layout = ({ children }) => {
   return (
@@ -15,13 +16,21 @@ const Layout = ({ children }) => {
       >
         <Toolbar />
         <List>
-          {['Dashboard', 'Bar Chart', 'Pie Chart', 'Line Diagram', 'Info'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
+          <ListItem button component={Link} to="/">
+            <ListItemText primary="Home" sx={{fontWeight:'bold' }}/>
+          </ListItem>
+          <ListItem button component={Link} to="/chart">
+            <ListItemText primary="Bar Chart" />
+          </ListItem>
+          <ListItem button component={Link} to="/piechart">
+            <ListItemText primary="Pie Chart" />
+          </ListItem>
         </List>
+        <ListItem button component={Link} to="/linechart">
+            <ListItemText primary="Line Chart" />
+        </ListItem>
       </Drawer>
+
       <div style={{ flexGrow: 1, padding: '20px' }}>
         <AppBar position="static" sx={{ backgroundColor: '#181C24' }}>
           <Toolbar>
