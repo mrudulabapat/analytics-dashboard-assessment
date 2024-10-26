@@ -17,7 +17,7 @@ const Layout = ({ children }) => {
         <Toolbar />
         <List>
           <ListItem button component={Link} to="/">
-            <ListItemText primary="Home" sx={{fontWeight:'bold' }}/>
+            <ListItemText primary="Home" />
           </ListItem>
           <ListItem button component={Link} to="/chart">
             <ListItemText primary="Bar Chart" />
