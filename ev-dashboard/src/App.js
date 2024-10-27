@@ -8,6 +8,7 @@ import PieChart from './components/PieChart';
 import Chart from './components/Chart';
 import LineChart from './components/LineChart';
 import Papa from 'papaparse';
+import CssBaseline from '@mui/material/CssBaseline';
 
 
 const darkTheme = createTheme({
@@ -17,7 +18,9 @@ const darkTheme = createTheme({
       main: '#90caf9',
     },
     background: {
-      default: '#181C24',
+      //default: '#181C24',
+      // default: '#8e2de2',or #0f0f1e or #393a4a or #454555
+      default: '#0f0f1e',
       paper: '#1E2230',
     },
   },
@@ -34,9 +37,8 @@ function App() {
       download: true,
       header: true,  // To use the first row as column names
       complete: (result) => {
-        console.log(result.data);  // Check the parsed data
-        setCsvData(result.data);      // Set the parsed data to state
-       
+        console.log(result.data);  
+        setCsvData(result.data);     
       },
     });
   }, []);
@@ -44,10 +46,11 @@ function App() {
 
   return (
     <ThemeProvider theme={darkTheme}>
+      <CssBaseline />
       <Router>
       <Layout>
         <Routes>
-          <Route path="/" element={<Dashboard />} />
+          <Route path="/" element={<Dashboard data={csvData}/>} />
           <Route path="/chart" element={<Chart data={csvData}/>}  />
           <Route path="/piechart" element={<PieChart data={csvData} />} />
           <Route path="/linechart" element={<LineChart data={csvData} />} />
