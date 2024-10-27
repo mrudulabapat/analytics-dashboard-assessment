@@ -67,11 +67,15 @@ const LineChart = ({ data }) => {
     responsive: true,
     plugins: {
       legend: {
-        position: 'top',
+        position: 'top',  
+        labels: {
+          color: '#fff5ff', 
+        } 
       },
       title: {
         display: true,
         text: 'Vehicles by Model Year',
+        color: '#fff5ff',  
       },
     },
     scales: {
@@ -102,7 +106,6 @@ const LineChart = ({ data }) => {
               sx = {{ border: '1px solid #ccc', minWidth: '20em' , backgroundColor:'#6a78b2'}}
               labelId="makeId"
             >
-              
               {uniqueMakes.map((make, index) => (
                 <MenuItem key={index} value={make}>
                   {make}
@@ -113,7 +116,7 @@ const LineChart = ({ data }) => {
       </Box>
       <Box sx={{ padding: '1em' }}>
         <Grid container spacing={2}>
-          <Grid item xs={12}>
+          <Grid item xs={8}>
             <Card sx={{ minHeight: '300px' }}>
               <CardContent>
                 {Object.keys(teslaModelYearData).length > 0 ? (

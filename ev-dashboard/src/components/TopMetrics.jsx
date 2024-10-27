@@ -1,4 +1,3 @@
-// src/components/TopMetrics.js
 import React from 'react';
 import { Grid, Card, Typography } from '@mui/material';
 
@@ -24,8 +23,10 @@ const TopMetrics = () => (
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        justifyContent: 'space-between', // Distributes space evenly
-        height: '100%', // Full height of grid item
+        justifyContent: 'space-between', 
+        height: '100%', 
+        boxShadow: '0 0 15px rgba(60, 70, 101, 0.5)',
+
       }}
     >
       <Typography variant="h6" sx={{ flexGrow: 1, display: 'flex' }}>

@@ -32,35 +32,30 @@ const WordCloudChart = ({ data }) => {
 
   const styles = {
     container: {
-      //border: '1px solid #ccc',
-      padding: '2em',
-      //borderRadius: '8px',
-      //boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)',
-      fontFamily: 'Arial, sans-serif', // Custom font for the box
+      padding: '1em',
+      fontFamily: 'Arial, sans-serif', 
       height: '100%', 
       width: '100%',
       display: 'flex',
       justifyContent: 'center',
-      alignItems: 'center'
-      //maxWidth: '500px',
-      //margin: '2 auto',
-      //backgroundColor: '#f9f9f9',
+      alignItems: 'center',
+      textAlign: 'center'
       
     },
     tagCloud: {
-      fontFamily: 'Arial, monospace', // Custom font for words
+      fontFamily: 'Arial, monospace', 
     },
   };
 
   return (
     <div style={styles.container}>
       <TagCloud
-        //minSize={25}
-        //maxSize={50}
+        minSize={15}
+        maxSize={35}
         tags={makeWordData}
         colorOptions={{
-          luminosity: 'bright', // Darker shades
-          hue: 'white',       
+          luminosity: 'light', 
+          hue: 'blue',       
         }}
         style={styles.tagCloud}
       />

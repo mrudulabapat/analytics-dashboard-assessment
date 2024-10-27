@@ -36,8 +36,8 @@ const Dashboard = ({ data }) => {
 
     // Loop through the data and count the number of EVs per year
     data.forEach(row => {
-      const year = row['Model Year'];  // Adjust this key based on your data structure
-      const vehicleType = row['Electric Vehicle Type']; // Ensure this matches your data structure
+      const year = row['Model Year'];  
+      const vehicleType = row['Electric Vehicle Type']; 
 
       // Exclude 2024 from the dataset
       if (year && year !== '2024') {
@@ -73,7 +73,21 @@ const Dashboard = ({ data }) => {
         },
       ],
     });
-  };
+
+    
+    };
+    
+    const chartOptions = {
+      plugins: {
+        legend: {
+          labels: {
+            color: '#fff5ff', 
+          },
+        },
+      }
+    };
+
+
 
   return(
     <>
@@ -84,7 +98,7 @@ const Dashboard = ({ data }) => {
             <Card sx={{ minHeight: '300px',  height: '100%', flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
               <CardContent sx={{ flexGrow: 1 }}>
                 {evUsageData.labels.length > 0 ? (
-                  <Line data={evUsageData} />
+                  <Line data={evUsageData} options={chartOptions} />
                 ) : (
                   <p>Loading data...</p>
                 )}
@@ -95,8 +109,8 @@ const Dashboard = ({ data }) => {
           <Grid item xs={12} md={6} >
           <Card sx={{ minHeight: '300px', height: '100%', flexGrow: 1, display: 'flex', flexDirection: 'column'  }}>
               <CardContent sx={{ flexGrow: 1, display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center', }}>
+                justifyContent: 'center',
+                alignItems: 'center', }}>
                 <Typography variant="h4" sx={{ fontWeight: 'bold' }}>
                   Market share in 2023
                 </Typography>

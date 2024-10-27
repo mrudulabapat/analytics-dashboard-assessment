@@ -19,8 +19,9 @@ const darkTheme = createTheme({
     },
     background: {
       //default: '#181C24',
-      // default: '#8e2de2',or #0f0f1e or #393a4a or #454555
+      // default: '#8e2de2',or #0f0f1e or #393a4a 
       default: '#0f0f1e',
+      //default: '#1f1e30 ',
       paper: '#1E2230',
     },
   },

@@ -9,7 +9,6 @@ import {
   Legend,
 } from 'chart.js';
 
-// Register required components
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const PieChart = ({ data }) => {
@@ -170,7 +169,7 @@ const PieChart = ({ data }) => {
         <Card sx={{ minHeight: '300px' }}>
             <CardContent sx={{ height:'100%', justifyContent: 'center', alignItems: 'center' }}>
                 {Object.keys(vehicleTypeAnalysis).length > 0 ? (
-                    <Pie data={ vehicleTypeChartData } options={{ plugins: { legend: { position: 'top' } }, maintainAspectRatio: false }} height={300} />
+                    <Pie data={ vehicleTypeChartData } options={{ plugins: { legend: { position: 'top', labels: { color: '#fff5ff'}}}, maintainAspectRatio: false }} height={300} />
                 ) : (
                     <p>Loading data...</p>
                 )}
@@ -181,7 +180,7 @@ const PieChart = ({ data }) => {
           <Card sx={{ minHeight: '300px' }}>
             <CardContent sx={{ height: '100%', justifyContent: 'center', alignItems: 'center' }}>
               {Object.keys(cafvAnalysis).length > 0 ? (
-                <Pie data={cafvChartData} options={{ plugins: { legend: { position: 'top' } }, maintainAspectRatio: false }} height={300} />
+                <Pie data={cafvChartData} options={{ plugins: { legend: { position: 'top', labels: { color: '#fff5ff'} } }, maintainAspectRatio: false }} height={300} />
               ) : (
                 <p>Loading CAFV data...</p>
               )}

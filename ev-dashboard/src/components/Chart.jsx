@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Card, CardContent, Grid, MenuItem, Select, FormControl, InputLabel, TextField, Input, FormHelperText } from '@mui/material';
+import { Box, Card, CardContent, Grid, MenuItem, Select, FormControl, InputLabel } from '@mui/material';
 import { Bar } from 'react-chartjs-2';
 
 import {
   Chart as ChartJS,
-  CategoryScale,       // Register the category scale
+  CategoryScale,       
   LinearScale,
   BarElement,
   Title,
@@ -12,7 +12,6 @@ import {
   Legend,
 } from 'chart.js';
 
-// Register the components for use
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -54,9 +53,16 @@ const Chart = ({data}) => {
     }
   }, [selectedCounty, selectedYear, selectedMake]);
 
+  const chartOptions = {
+    plugins: {
+      legend: {
+        labels: {
+          color: '#fff5ff', 
+        },
+      },
+    }
+  };
 
-
-// Analyze the data by state, for example
 const analyzeDataByCounty = (data) => {
   const filteredData = data.filter(row => 
     (selectedYear ? row['Model Year'] === selectedYear : true) &&
@@ -78,7 +84,7 @@ const analyzeDataByCounty = (data) => {
 
   // Prepare chart data
   const chartDataCounty = {
-    labels: Object.keys(countyAnalysis),  // States
+    labels: Object.keys(countyAnalysis),  
     datasets: [{
       label: 'Number of Electric Vehicles by County',
       data: Object.values(countyAnalysis),  // Count of vehicles by state
@@ -218,7 +224,7 @@ const analyzeDataByMake = (data) => {
           <Card sx={{ minHeight: '300px' }}>
             <CardContent>
               {Object.keys(countyAnalysis).length > 0 ? (
-                <Bar data={chartDataCounty} />
+                <Bar data={chartDataCounty} options={chartOptions} />
               ) : (
                 <p>Loading data...</p>
               )}
@@ -230,7 +236,7 @@ const analyzeDataByMake = (data) => {
           <Card sx={{ minHeight: '300px' }}>
             <CardContent>
               {Object.keys(makeAnalysis).length > 0 ? (
-                <Bar data={chartDataMake} />
+                <Bar data={chartDataMake} options={chartOptions} />
               ) : (
                 <p>Loading data...</p>
               )}
@@ -242,7 +248,7 @@ const analyzeDataByMake = (data) => {
           <Card sx={{ minHeight: '300px' }}>
             <CardContent>
               {Object.keys(vehicleTypeAnalysis).length > 0 ? (
-                <Bar data={chartDataVehicleType} />
+                <Bar data={chartDataVehicleType} options={chartOptions} />
               ) : (
                 <p>Loading data...</p>
               )}
