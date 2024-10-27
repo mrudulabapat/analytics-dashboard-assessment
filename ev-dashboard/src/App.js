@@ -1,4 +1,3 @@
-// src/App.js
 import React,{useState, useEffect} from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
@@ -18,10 +17,7 @@ const darkTheme = createTheme({
       main: '#90caf9',
     },
     background: {
-      //default: '#181C24',
-      // default: '#8e2de2',or #0f0f1e or #393a4a 
       default: '#0f0f1e',
-      //default: '#1f1e30 ',
       paper: '#1E2230',
     },
   },
@@ -33,10 +29,9 @@ function App() {
   const [csvData, setCsvData] = useState([]);
   
   useEffect(() => {
-    // Load the CSV file from public folder
     Papa.parse(`${process.env.PUBLIC_URL}/Electric_Vehicle_Population_Data.csv`, {
       download: true,
-      header: true,  // To use the first row as column names
+      header: true,  
       complete: (result) => {
         console.log(result.data);  
         setCsvData(result.data);     
@@ -59,7 +54,6 @@ function App() {
       </Layout>
       </Router> 
       
-
     </ThemeProvider>
   );
 }

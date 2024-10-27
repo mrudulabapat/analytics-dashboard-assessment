@@ -79,7 +79,7 @@ const analyzeDataByCounty = (data) => {
   
   setcountyAnalysis(countyCount);
 
-  console.log('County Analysis:', countyCount);  // Debug the result of the analysis
+  console.log('County Analysis:', countyCount); 
 };
 
   // Prepare chart data

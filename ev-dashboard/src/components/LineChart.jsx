@@ -58,7 +58,7 @@ const LineChart = ({ data }) => {
         borderColor: 'rgba(75, 192, 192, 1)',
         backgroundColor: 'rgba(75, 192, 192, 0.4)',
         fill: false,
-        tension: 0.1, // Smoothness of the line
+        tension: 0.1, 
       },
     ],
   };

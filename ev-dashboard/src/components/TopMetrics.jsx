@@ -3,8 +3,8 @@ import { Grid, Card, Typography } from '@mui/material';
 
 const metrics = [
   { label: 'State', value: 'Washington', change: '50000+ EV users' },
-  { label: 'Most Used Electric Utility', value: 'Puget Sound Energy', change: '13K+ users' },
-  { label: 'Most EV Users In', value: 'Seattle', change: '+10427' },
+  { label: 'Most Used Electric Utility', value: 'Puget Sound Energy', change: '24K+ users' },
+  { label: 'Most EV Users In', value: 'Seattle', change: '10427+' },
   { label: 'Most Used Make in 2023', value: 'Tesla', change: 'Model Y' },
 ];
 

@@ -1,4 +1,3 @@
-// src/pages/Dashboard.js
 import React, {useState, useEffect} from 'react';
 import TopMetrics from '../components/TopMetrics';
 import {Grid, Box, Typography, Card, CardContent} from '@mui/material';
@@ -42,9 +41,9 @@ const Dashboard = ({ data }) => {
       // Exclude 2024 from the dataset
       if (year && year !== '2024') {
         if (vehicleType === 'Battery Electric Vehicle (BEV)') {
-          usageCount.BEV[year] = (usageCount.BEV[year] || 0) + 1; // Increment count for BEV
+          usageCount.BEV[year] = (usageCount.BEV[year] || 0) + 1; 
         } else if (vehicleType === 'Plug-in Hybrid Electric Vehicle (PHEV)') {
-          usageCount.PHEV[year] = (usageCount.PHEV[year] || 0) + 1; // Increment count for PHEV
+          usageCount.PHEV[year] = (usageCount.PHEV[year] || 0) + 1; 
         }
       }
     });
@@ -127,8 +126,6 @@ const Dashboard = ({ data }) => {
     </>
 
   );
-
-
 };
 
 

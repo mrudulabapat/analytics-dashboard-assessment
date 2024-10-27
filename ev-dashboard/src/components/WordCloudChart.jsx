@@ -17,7 +17,6 @@ const WordCloudChart = ({ data }) => {
         return acc;
       }, {});
 
-      // Convert the make count to format suitable for react-tagcloud
       const wordData = Object.keys(makeCount).map((make) => ({
         value: make,
         count: makeCount[make],
